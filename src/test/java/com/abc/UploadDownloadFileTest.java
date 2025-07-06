@@ -5,12 +5,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import static util.FileUtil.deleteFile;
@@ -25,7 +22,7 @@ public class UploadDownloadFileTest extends BaseTest {
         driver.get("https://the-internet.herokuapp.com/upload");
         logger.info("Step 1: Upload File");
         WebElement uploadBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#file-upload")));
-        uploadBtn.sendKeys(PATH_TO_UPLOAD + "/" + FILE_NAME);
+        uploadBtn.sendKeys(PATH_TO_UPLOAD  + FILE_NAME);
         WebElement submitBtn = driver.findElement(By.cssSelector("#file-submit"));
         submitBtn.click();
 
@@ -36,9 +33,8 @@ public class UploadDownloadFileTest extends BaseTest {
         logger.info("Step 3: Download file");
         driver.get("https://the-internet.herokuapp.com/download");
         var fileNameXPath = "//a[normalize-space()='%s']".formatted(FILE_NAME);
-        driver.findElement(By.xpath(fileNameXPath)).click();
-        Thread.sleep(1000);
-        Assert.assertTrue(new File(PATH_TO_DOWNLOAD + "/" + FILE_NAME).exists(), "File is not downloaded");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(fileNameXPath))).click();
+        Assert.assertTrue(new File(PATH_TO_DOWNLOAD + FILE_NAME).exists(), "File is not downloaded");
 
     }
 
@@ -57,5 +53,4 @@ public class UploadDownloadFileTest extends BaseTest {
     public void deleteUploadedFilesAfterTest() {
         deleteFile(PATH_TO_UPLOAD);
     }
-
 }
