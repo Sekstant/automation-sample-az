@@ -11,12 +11,11 @@ import org.slf4j.LoggerFactory;
 
 
 public class DropdownTest extends BaseTest {
-
+    Logger logger = LoggerFactory.getLogger(DropdownTest.class);
     @Test(
             description = "Dropdown"
     )
     public void testSelectDropdown() {
-        Logger logger = LoggerFactory.getLogger(DropdownTest.class);
         driver.get("https://the-internet.herokuapp.com/dropdown");
         By dropdownLocator = By.id("dropdown");
 

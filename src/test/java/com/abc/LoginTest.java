@@ -9,12 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class LoginTest extends BaseTest {
-
+    Logger logger = LoggerFactory.getLogger(LoginTest.class);
     @Test(
             description = "Login"
     )
     public void testLogin() {
-        Logger logger = LoggerFactory.getLogger(LoginTest.class);
+
         driver.get("https://the-internet.herokuapp.com/login");
 
         String usernameToEnter = "tomsmith";

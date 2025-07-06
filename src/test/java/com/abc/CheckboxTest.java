@@ -12,12 +12,12 @@ import org.slf4j.LoggerFactory;
 
 
 public class CheckboxTest extends BaseTest {
-
+    Logger logger = LoggerFactory.getLogger(CheckboxTest.class);
     @Test(
             description = "Checkboxes"
     )
     public void testSelectDeselectCheckbox() {
-        Logger logger = LoggerFactory.getLogger(CheckboxTest.class);
+
         driver.get("https://the-internet.herokuapp.com/checkboxes");
 
         WebElement checkbox1 = driver.findElement(By.xpath("//input[1]"));
