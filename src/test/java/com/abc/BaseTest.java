@@ -10,6 +10,7 @@ import java.time.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import util.ConfigReader;
+import browser.DriverManager;
 
 public abstract class BaseTest {
     protected WebDriver driver;

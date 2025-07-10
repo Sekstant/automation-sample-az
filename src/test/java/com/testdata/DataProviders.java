@@ -1,4 +1,4 @@
-package com.abc;
+package com.testdata;
 
 import org.testng.annotations.DataProvider;
 import java.util.Random;

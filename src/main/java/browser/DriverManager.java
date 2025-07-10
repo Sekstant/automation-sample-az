@@ -1,4 +1,4 @@
-package com.abc;
+package browser;
 
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
