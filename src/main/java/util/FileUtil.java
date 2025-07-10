@@ -20,7 +20,7 @@ public class FileUtil {
     }
 
     public static void generateRandomFile(String filePath, String fileName) {
-        File file = new File(filePath + "/" + fileName);
+        File file = new File(filePath  + fileName);
         try (FileWriter writer = new FileWriter(file)) {
             writer.write("This is an auto-generated file for upload test.");
             logger.info("Test file created at: " + file.getAbsolutePath());

@@ -34,6 +34,7 @@ public class UploadDownloadFileTest extends BaseTest {
         driver.get("https://the-internet.herokuapp.com/download");
         var fileNameXPath = "//a[normalize-space()='%s']".formatted(FILE_NAME);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(fileNameXPath))).click();
+        Thread.sleep(10000);
         Assert.assertTrue(new File(PATH_TO_DOWNLOAD + FILE_NAME).exists(), "File is not downloaded");
 
     }

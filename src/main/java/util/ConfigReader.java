@@ -9,7 +9,7 @@ import java.util.Properties;
 
 public class ConfigReader {
     private static final Properties properties = new Properties();
-    static Logger logger = LoggerFactory.getLogger(ConfigReader.class);
+    private static Logger logger = LoggerFactory.getLogger(ConfigReader.class);
 
     static {
         try {

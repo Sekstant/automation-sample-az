@@ -13,17 +13,10 @@ import org.slf4j.LoggerFactory;
 
 public class InputTest extends BaseTest {
     Logger logger = LoggerFactory.getLogger(InputTest.class);
-    @DataProvider(name = "inputValues")
-    public Object[][] provideInputValues() {
-        return new Object[][]{
-                {String.valueOf(new Random().nextInt(1000, 100000))},
-                {String.valueOf(new Random().nextInt(1000, 100000))},
-                {String.valueOf(new Random().nextInt(1000, 100000))}
-        };
-    }
     @Test(
             description = "Input",
-            dataProvider = "inputValues"
+            dataProvider = "provideInputValues",
+            dataProviderClass = DataProviders.class
     )
 
     public void testInput(String valueToInsertString) {
