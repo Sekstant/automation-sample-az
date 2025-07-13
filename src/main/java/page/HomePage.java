@@ -8,8 +8,6 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class HomePage extends Page {
-
-
     private final By searchBy = By.xpath("//input[@id='carson-one-hitter']");
     private final By searchBtnBy = By.className("carson-submit-button");
 
@@ -27,4 +25,7 @@ public class HomePage extends Page {
         super(driver);
     }
 
+    public void goToURL(String url){
+        driver.get(url);
+    }
 }

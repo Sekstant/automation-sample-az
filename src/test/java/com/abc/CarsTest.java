@@ -13,12 +13,11 @@ public class CarsTest extends BaseTest {
     @Test(
             description = "Cars"
     )
-    public void testCars() throws InterruptedException {
-        driver.get("https://www.cars.com/");
-
+    public void testCars() {
+        HomePage homePage = new HomePage(driver);
+        homePage.goToURL("https://www.cars.com/");
 
         logger.info("Step 1: Provide Make and Model");
-        HomePage homePage = new HomePage(driver);
         String searchParametr = "Ford";
         homePage.provideSearchString(searchParametr);
 
@@ -27,7 +26,7 @@ public class CarsTest extends BaseTest {
 
         logger.info("Step 3: Wait till page is opened");
         SearchResultPage searchResultPage = new SearchResultPage(driver);
-        searchResultPage.pageIsOpened();
+        searchResultPage.waitUntilPageIsOpened();
 
         logger.info("Step 4: Check that first element in result contains data from Search filed");
         String textFirstElement = searchResultPage.getFirstElementText();
