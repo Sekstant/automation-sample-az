@@ -15,7 +15,7 @@ public class CarsTest extends BaseTest {
     )
     public void testCars() {
         HomePage homePage = new HomePage(driver);
-        homePage.goToURL("https://www.cars.com/");
+        homePage.goToURL();
 
         logger.info("Step 1: Provide Make and Model");
         String searchParametr = "Ford";

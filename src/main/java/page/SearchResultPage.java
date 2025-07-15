@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import util.ConfigReader;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ public class SearchResultPage extends Page {
     private final By headerBy = By.cssSelector(".spark-heading-1.sds-page-section__title");
     private final By headerLogoBy = By.cssSelector(".header-logo.header-logo__img");
     private final By listOfFoundElementsBy = By.xpath("(//a[contains(@class, 'vehicle-card-link')])");
+    private final String resultUrl = ConfigReader.getProperty("resultUrl");
 
     public String getHeaderText() {
         WebElement header = wait.until(ExpectedConditions.visibilityOfElementLocated(headerBy));
@@ -34,7 +36,8 @@ public class SearchResultPage extends Page {
     public SearchResultPage(WebDriver driver) {
         super(driver);
     }
-    public void goToURL(String url){
-        driver.get(url);
+
+    public void goToURL() {
+        driver.get(resultUrl);
     }
 }
