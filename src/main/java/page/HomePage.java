@@ -3,23 +3,26 @@ package page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import util.ConfigReader;
 
 public class HomePage extends Page {
-    private final By searchBy = By.xpath("//input[@id='carson-one-hitter']");
-    private final By searchBtnBy = By.className("carson-submit-button");
+    @FindBy(xpath="//input[@id='carson-one-hitter']")
+    private WebElement searchInput;
+    @FindBy(className = "carson-submit-button")
+    private WebElement searchBtn;
     private final String homeUrl = ConfigReader.getProperty("homeUrl");
 
     public void provideSearchString(String model) {
-        WebElement searchInput = wait.until(ExpectedConditions.visibilityOfElementLocated(searchBy));
+        wait.until(ExpectedConditions.visibilityOf(searchInput));
         searchInput.sendKeys(model);
     }
 
     public void clickOnSearchIcon() {
-        WebElement searchBtn = wait.until(ExpectedConditions.elementToBeClickable(searchBtnBy));
+        wait.until(ExpectedConditions.visibilityOf(searchBtn));
         searchBtn.click();
     }
 
