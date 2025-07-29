@@ -15,9 +15,6 @@ public class CreateUser {
 
     static UserService userService;
     static int userId;
-    static String userName;
-    static String userGender;
-    static String userStatus;
 
     Logger logger = LoggerFactory.getLogger(CreateUser.class);
 
@@ -34,12 +31,13 @@ public class CreateUser {
     )
 
     public void testCreateUser() {
-        UserRequest user = new UserRequest("AZ az72", "2421767@example.com", "female", "active");
+        UserRequest user = new UserRequest("AZ ae2", "t4ed@example.com", "female", "active");
         Response response = userService.createUser(user);
         Assert.assertEquals(response.then().extract().statusCode(), 201, "Invalid http status code");
         userId = response.then().extract().path("id");
     }
     @Test(
+            dependsOnMethods = "testCreateUser",
             description = "GET  https://gorest.co.in/public/v2/users/ID" +
                           "- get user by ID" +
                           "- verify response success status" +
@@ -54,6 +52,7 @@ public class CreateUser {
     }
 
     @Test(
+            dependsOnMethods = "testGetUserById",
             description = "PATCH/PUT: " +
                           "- replace or update user" +
                           "- verify response success status" +
@@ -61,7 +60,7 @@ public class CreateUser {
     )
 
     public void testUpdateUser(){
-        UserRequest updatedUser = new UserRequest("AZ UPDATEd", "24e3777@example.com", "male", "inactive");
+        UserRequest updatedUser = new UserRequest("AZ UPDATEd", "245577@example.com", "male", "inactive");
         Response response = userService.updateUser(userId, updatedUser);
         Assert.assertEquals(response.then().extract().statusCode(), 200, "Invalid http status code");
         Response responseUpdated = userService.getUserById(userId);
@@ -69,6 +68,7 @@ public class CreateUser {
     }
 
     @Test(
+            dependsOnMethods = "testUpdateUser",
             description = "DELETE: " +
                           "- delete user" +
                           "- verify response success status" +
