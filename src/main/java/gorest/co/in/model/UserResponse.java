@@ -1,5 +1,7 @@
 package gorest.co.in.model;
+
 import lombok.Data;
+
 @Data
 public class UserResponse {
     private int id;

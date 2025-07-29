@@ -2,11 +2,13 @@ package gorest.co.in.service;
 
 import io.restassured.response.Response;
 import gorest.co.in.model.UserRequest;
+import util.ConfigReader;
+
 import static io.restassured.RestAssured.*;
 
 public class UserService {
-    private final String BASE_PATH = "https://gorest.co.in/public/v2/users";
-       private final String token = "Bearer 26d87ea1600e215c9ff33ad00f082a4f5b4990dc709a8ae0ffe5b38b481b714f";
+    private final String BASE_PATH = ConfigReader.getProperty("baseURI") + "/public/v2/users";
+    private final String token = "Bearer 26d87ea1600e215c9ff33ad00f082a4f5b4990dc709a8ae0ffe5b38b481b714f";
 
     public Response createUser(UserRequest user) {
         return given()
@@ -21,6 +23,7 @@ public class UserService {
                 .header("Authorization", token)
                 .get(BASE_PATH + "/" + id);
     }
+
     public Response updateUser(int id, UserRequest user) {
         return given()
                 .header("Authorization", token)
