@@ -11,7 +11,7 @@ public abstract class Page {
 
     public Page(WebDriver driver) {
         this.driver = driver;
-        int duration =  Integer. parseInt(ConfigReader.getProperty("durationOfSecond"));
+        int duration =  Integer.parseInt(ConfigReader.getProperty("durationOfSecond"));
         this.wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(duration));
         PageFactory.initElements(driver, this);
     }
