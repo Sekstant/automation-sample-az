@@ -1,4 +1,4 @@
-package util;
+package com.testdata;
 
 import com.github.javafaker.Faker;
 import com.github.javafaker.service.FakeValuesService;

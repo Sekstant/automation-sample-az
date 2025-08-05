@@ -3,24 +3,19 @@ package com.abc;
 import gorest.co.in.model.UserRequest;
 import gorest.co.in.model.UserResponse;
 import gorest.co.in.service.UserService;
-import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import static util.PersonalDataGenerator.*;
+import static com.testdata.PersonalDataGenerator.*;
 
 
 public class CreateUser {
 
-    static UserService userService;
-    static int userId;
-
-    Logger logger = LoggerFactory.getLogger(CreateUser.class);
+    private UserService userService;
+    private int userId;
 
     @BeforeClass
-    static void setup() {
+    void setup() {
         userService = new UserService();
     }
 
@@ -33,9 +28,8 @@ public class CreateUser {
 
     public void testCreateUser() {
         UserRequest user = new UserRequest(generateName(), generateEmail(), "female", "active");
-        Response response = userService.createUser(user);
-        Assert.assertEquals(response.then().extract().statusCode(), 201, "Invalid http status code");
-        userId = response.then().extract().path("id");
+        UserResponse userResponse = userService.createUser(user);
+        userId = userResponse.getId();
     }
 
     @Test(
@@ -47,10 +41,8 @@ public class CreateUser {
     )
 
     public void testGetUserById() {
-        Response response = userService.getUserById(userId);
-        Assert.assertEquals(response.then().extract().statusCode(), 200, "Invalid http status code");
-        UserResponse user = response.then().extract().as(UserResponse.class);
-        Assert.assertEquals(user.getId(), userId, "IDs are not equals");
+        UserResponse userResponse = userService.getUserById(userId, 200);
+        Assert.assertEquals(userResponse.getId(), userId, "IDs are not equals");
     }
 
     @Test(
@@ -62,11 +54,15 @@ public class CreateUser {
     )
 
     public void testUpdateUser() {
-        UserRequest updatedUser = new UserRequest(generateName(), generateEmail(), "male", "inactive");
-        Response response = userService.updateUser(userId, updatedUser);
-        Assert.assertEquals(response.then().extract().statusCode(), 200, "Invalid http status code");
-        Response responseUpdated = userService.getUserById(userId);
-        Assert.assertEquals(response.then().extract().statusCode(), responseUpdated.then().extract().statusCode(), "Updated data are not returned by GET");
+        String updatedName = generateName();
+        String updatedEmail = generateEmail();
+        String updatedGender = "male";
+        String updatedStatus = "inactive";
+        UserRequest updatedUser = new UserRequest(updatedName,updatedEmail, updatedGender, updatedStatus);
+        userService.updateUser(userId, updatedUser);
+        Assert.assertEquals(userService.getUserById(userId,200).getName(), updatedName, "Name is not updated");
+        Assert.assertEquals(userService.getUserById(userId,200).getEmail(), updatedEmail, "Email is not updated");
+
     }
 
     @Test(
@@ -78,9 +74,8 @@ public class CreateUser {
     )
 
     public void testDeleteUser() {
-        Response response = userService.deleteUser(userId);
-        Assert.assertEquals(response.then().extract().statusCode(), 204, "User is not deleted");
-        Assert.assertEquals(userService.getUserById(userId).then().extract().statusCode(), 404, "User is returned by GET, user is not deleted");
+        userService.deleteUser(userId);
+        Assert.assertEquals(userService.getUserById(userId, 404).getMessage(), "Resource not found", "User is returned by GET, user is not deleted");
     }
 
 }
