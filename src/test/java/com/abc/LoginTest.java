@@ -10,6 +10,10 @@ import org.slf4j.LoggerFactory;
 
 public class LoginTest extends BaseTest {
     Logger logger = LoggerFactory.getLogger(LoginTest.class);
+    private final By usernameField = By.id("username");
+    private final By passwordField = By.id("password");
+    private final By loginButton   = By.cssSelector("#login button");
+    private final By successAlert  = By.cssSelector(".flash.success");
     @Test(
             description = "Login"
     )
@@ -20,13 +24,10 @@ public class LoginTest extends BaseTest {
         String usernameToEnter = "tomsmith";
         String passwordToEnter = "SuperSecretPassword!";
 
-        WebElement username = driver.findElement(By.xpath("//*[@id=\"username\"]"));
-        WebElement password = driver.findElement(By.xpath("//*[@id=\"password\"]"));
-        WebElement loginBtn = driver.findElement(By.xpath("//*[@id=\"login\"]/button"));
-
         logger.info("Step 1: Provide username and password and click on Login btn");
-        wait.until(ExpectedConditions.visibilityOf(username));
-        wait.until(ExpectedConditions.visibilityOf(password));
+        WebElement username = wait.until(ExpectedConditions.visibilityOfElementLocated(usernameField));
+        WebElement password = wait.until(ExpectedConditions.visibilityOfElementLocated(passwordField));
+        WebElement loginBtn = wait.until(ExpectedConditions.elementToBeClickable(loginButton));
         username.sendKeys(usernameToEnter);
         password.sendKeys(passwordToEnter);
         loginBtn.click();
