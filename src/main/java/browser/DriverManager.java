@@ -22,6 +22,16 @@ public class DriverManager {
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.setExperimentalOption("prefs", chromePrefs);
                 chromeOptions.setPageLoadStrategy(PageLoadStrategy.NONE);
+
+                chromeOptions.addArguments("--headless=new");
+                chromeOptions.addArguments("--no-sandbox");
+                chromeOptions.addArguments("--disable-dev-shm-usage");
+                chromeOptions.addArguments("--disable-gpu");
+                chromeOptions.addArguments("--remote-allow-origins=*");
+                chromeOptions.addArguments("--disable-notifications");
+                chromeOptions.addArguments("--disable-popup-blocking");
+                chromeOptions.addArguments("--user-data-dir=/tmp/chrome-" + System.currentTimeMillis());
+
                 return new ChromeDriver(chromeOptions);
 
             case "firefox":

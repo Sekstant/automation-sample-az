@@ -22,13 +22,25 @@ jobs:
           distribution: 'temurin' # Java distribution (e.g., temurin, adopt)
           java-version: '17' # Specify the Java version
 
-      - name: Setup Chrome Browser
-        uses: browser-actions/setup-chrome@latest # Action to install Chrome browser
+      # Install Chrome & ChromeDriver
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@latest
         with:
-          chrome-version: 'stable' # Install the latest stable version of Chrome
+          chrome-version: stable
 
+      - name: Setup ChromeDriver
+        uses: nanasess/setup-chromedriver@v2
+
+      # Verify Chrome installation (debugging step, optional)
+      - name: Check Chrome version
+        run: google-chrome --version && chromedriver --version
+
+      # Build project without running tests
       - name: Build with Maven
-        run: mvn clean install -DskipTests # Build the project, skipping tests initially
+        run: mvn -B clean install -DskipTests
 
+      # Run Selenium + TestNG tests
       - name: Run TestNG Selenium Tests
-        run: mvn test # Execute the TestNG tests
+        run: |
+          echo "Running Selenium tests..."
+          mvn -B test -Dsurefire.useFile=false
