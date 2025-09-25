@@ -39,7 +39,7 @@ jobs:
       - name: Run TestNG Selenium Tests
         run: |
           echo "Running Selenium tests..."
-          mvn -B test -Dsurefire.useFile=false
+          mvn -B clean test -Dsurefire.useFile=false -Dallure.results.directory=allure-results
 
       - name: Upload Allure results
         uses: actions/upload-artifact@v4
