@@ -33,6 +33,9 @@ jobs:
       - name: Check Chrome version
         run: google-chrome --version && chromedriver --version
 
+      - name: Cleanup allure-history
+        run: rm -rf allure-history/.git
+
       - name: Build with Maven
         run: mvn -B clean install -DskipTests
 
@@ -74,3 +77,5 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: allure-history
+          force_orphan: true
+          enable_jekyll: false
