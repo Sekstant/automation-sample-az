@@ -33,10 +33,51 @@ jobs:
       - name: Check Chrome version
         run: google-chrome --version && chromedriver --version
 
+      - name: Cleanup allure-history
+        run: rm -rf allure-history/.git
+
       - name: Build with Maven
         run: mvn -B clean install -DskipTests
 
       - name: Run TestNG Selenium Tests
         run: |
           echo "Running Selenium tests..."
-          mvn -B test -Dsurefire.useFile=false
+          mvn -B clean test -Dsurefire.useFile=false -Dallure.results.directory=allure-results
+
+      - name: Upload Allure results
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
+          retention-days: 20
+
+      - name: Get Allure history
+        if: always()
+        run: |
+          if git ls-remote --exit-code origin gh-pages; then
+            echo "gh-pages branch exists, checking out..."
+            git clone --depth=1 --branch gh-pages https://github.com/${{ github.repository }} gh-pages
+          else
+            echo "gh-pages branch does not exist yet. Skipping checkout."
+          fi
+
+      - name: Generate Allure report
+        uses: simple-elf/allure-report-action@master
+        if: always()
+        id: allure-report
+        with:
+          allure_results: allure-results
+          gh_pages: gh-pages
+          allure_report: allure-report
+          allure_history: allure-history
+          keep_reports: 20
+
+      - name: Deploy report to Github Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: allure-history
+          force_orphan: true
+          enable_jekyll: false
