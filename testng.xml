@@ -6,7 +6,7 @@
     </listeners>
     <test name="Full package" >
         <classes>
-            <class name="com.abc.CarsTest" />
+            <class name="com.abc.LoginTest" />
         </classes>
     </test>
 </suite>

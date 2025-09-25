@@ -3,26 +3,25 @@ name: Selenium TestNG Tests
 on:
   push:
     branches:
-      - main # Trigger on pushes to the main branch
+      - main
   pull_request:
     branches:
-      - main # Trigger on pull requests to the main branch
+      - main
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest # Specify the operating system environment
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4 # Action to checkout your repository code
+        uses: actions/checkout@v4
 
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin' # Java distribution (e.g., temurin, adopt)
-          java-version: '17' # Specify the Java version
+          distribution: 'temurin'
+          java-version: '17'
 
-      # Install Chrome & ChromeDriver
       - name: Setup Chrome
         uses: browser-actions/setup-chrome@latest
         with:
@@ -31,15 +30,12 @@ jobs:
       - name: Setup ChromeDriver
         uses: nanasess/setup-chromedriver@v2
 
-      # Verify Chrome installation (debugging step, optional)
       - name: Check Chrome version
         run: google-chrome --version && chromedriver --version
 
-      # Build project without running tests
       - name: Build with Maven
         run: mvn -B clean install -DskipTests
 
-      # Run Selenium + TestNG tests
       - name: Run TestNG Selenium Tests
         run: |
           echo "Running Selenium tests..."
