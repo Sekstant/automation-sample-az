@@ -4,6 +4,7 @@ import gorest.co.in.model.UserResponse;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import gorest.co.in.model.UserRequest;
+import org.apache.http.HttpStatus;
 import util.ConfigReader;
 
 import static io.restassured.RestAssured.*;
@@ -21,7 +22,7 @@ public class UserService {
                 .post(BASE_PATH)
                 .then()
                 .log().all()
-                .statusCode(201)
+                .statusCode(HttpStatus.SC_CREATED)
                 .extract()
                 .response().as(UserResponse.class);
     }
@@ -46,7 +47,7 @@ public class UserService {
                 .put(BASE_PATH + "/" + id)
                 .then()
                 .log().all()
-                .statusCode(200)
+                .statusCode(HttpStatus.SC_OK)
                 .extract()
                 .response().as(UserResponse.class);
     }
@@ -58,6 +59,6 @@ public class UserService {
                 .delete(BASE_PATH + "/" + id)
                 .then()
                 .log().all()
-                .statusCode(204);
+                .statusCode(HttpStatus.SC_NO_CONTENT);
     }
 }
